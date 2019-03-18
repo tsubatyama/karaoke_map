@@ -31,7 +31,7 @@
 function initialize() {
 	// 地図を表示する際のオプションを設定
 	mapOptions = {
-		center: new google.maps.LatLng(35.6915291, 139.69687239999996),
+		center: new google.maps.LatLng(34.699879, 135.493032),
 		zoom: 8,
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
@@ -117,7 +117,7 @@ body{
 }
 #center{
 	background-color:white;
-	width:1000px;
+	width:1050px;
      margin-left:auto;    /* 左側マージンを自動的に空ける */
      margin-right:auto;   /* 右側マージンを自動的に空ける */
      padding:10px;
@@ -158,15 +158,18 @@ body{
 				// ボタンが押された時の処理
 				button.onclick = function() {
 				  // フォームに入力された住所情報を取得
-				  document.getElementById("store").value = "HAL東京";
+				  document.getElementById("store").value = "HAL大阪";
 				  document.getElementById("tel").value = "0333441010";
-				  document.getElementById("roomnum").value = "50";
-				  document.getElementById("address").value = "東京都新宿区西新宿１丁目７−３";
-				  document.getElementById("access").value = "新宿（西口）駅前・徒歩3分";
+				  document.getElementById("roomnum").value = "9";
+				  document.getElementById("smallnum").value = "6";
+				  document.getElementById("middlenum").value = "3";
+				  document.getElementById("largenum").value = "0";
+				  document.getElementById("address").value = "大阪府大阪市北区梅田３丁目３−１";
+				  document.getElementById("access").value = "大阪駅（桜橋口）駅前・徒歩５分";
 				  document.getElementById("business").value = "月〜土　09:00〜21:00";
 				  document.getElementById("holiday").value = "日曜日";
-				  document.getElementById("reurl").value = "https://www.hal.ac.jp/tokyo/access";
-				  document.getElementById("mourl").value = "https://www.hal.ac.jp/tokyo/access";
+				  document.getElementById("reurl").value = "https://www.hal.ac.jp/osaka/access";
+				  document.getElementById("mourl").value = "https://www.hal.ac.jp/osaka/access";
 				  // 取得した住所を引数に指定してcodeAddress()関数を実行
 				}
 				
@@ -175,7 +178,7 @@ body{
 				// ボタンが押された時の処理
 				aiu.onclick = function() {	
 					var request = {
-						name : "HAL東京"
+						name : "HAL大阪"
 					  };
 					$.ajax({
 						type : 'post',
@@ -197,7 +200,7 @@ body{
 				
 	
 				<div class="form-row">
-					<div class="form-group col-md-7">
+					<div class="form-group col-md-4">
 						<label for="upfile">店舗紹介画像</label>
 						<div class="form-group">
 							<div class="input-group-append">
@@ -209,21 +212,7 @@ body{
 							</div>
 						</div>
 					</div>
-	
-					<div class="form-group col-md-5">
-						<label for="tel">電話番号</label> <input name="tel" type="text"
-							class="form-control" id="tel" placeholder="00012345678">
-					</div>
-				</div>
-	
-	
-				<div class="form-row">
-					<div class="form-group  col-md-4">
-						<label for="roomnum">部屋数</label> <input name="roomnum" type="text"
-							class="form-control" id="roomnum" placeholder="">
-					</div>
-	
-					<div class="form-group col-md-6">
+					<div class="form-group col-md-4">
 						<label for="chen">チェーン店舗</label> <select name="chen"
 							style="height: 31px; font-size: 10.5px;" class="form-control"
 							id="chen">
@@ -240,6 +229,30 @@ body{
 						</select>
 					</div>
 	
+					<div class="form-group col-md-4">
+						<label for="tel">電話番号</label> <input name="tel" type="text"
+							class="form-control" id="tel" placeholder="00012345678">
+					</div>
+				</div>
+	
+	
+				<div class="form-row">
+					<div class="form-group  col-md-3">
+						<label for="roomnum">部屋数</label> <input name="roomnum" type="text"
+							class="form-control" id="roomnum" placeholder="">
+					</div>
+					<div class="form-group  col-md-2">
+						<label for="smallnum">S部屋数(４人以下)</label> <input name="smallnum" type="text"
+							class="form-control" id="smallnum" placeholder="">
+					</div>
+					<div class="form-group  col-md-2">
+						<label for="middlenum">M部屋数(５人〜８人)</label> <input name="middlenum" type="text"
+							class="form-control" id="middlenum" placeholder="">
+					</div>
+					<div class="form-group  col-md-2">
+						<label for="largenum">L部屋数(９人以上)</label> <input name="largenum" type="text"
+							class="form-control" id="largenum" placeholder="">
+					</div>
 					<div class="form-group col-md-2">
 						<label for="ate">飲食物持込</label><br> <label
 							style="font-size: 11.5px;" class="form-check form-check-inline"

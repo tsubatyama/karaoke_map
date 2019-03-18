@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import entities.Reservations;
 import entities.Stores;
+import entities.Time;
 
 
 public class DataAccess extends Dao {
@@ -64,10 +65,10 @@ public class DataAccess extends Dao {
 
 	//データベースに挿入
 	public void test(Stores st)throws SQLException{
-        this._sql = "INSERT INTO stores(id,name,latitude,longitude,icon,room_num,is_immediately,is_ate,is_half,money_url,reservation_url,tel,address,holiday,access,business,photo) "; 
+        this._sql = "INSERT INTO stores(id,name,latitude,longitude,icon,room_num,is_immediately,is_ate,is_half,money_url,reservation_url,tel,address,holiday,access,business,photo,small_num,middle_num,large_num) "; 
         this._sql += "VALUES(NULL,'"+st.getName()+"',"+st.getLatitude()+","+st.getLongitude()+",'"+st.getIcon()+"',"+st.getRoomNum()+",";
         this._sql += ""+st.getIsImmediately()+","+st.getIsAte()+",'"+st.getIsHalf()+"','"+st.getMoneyUrl()+"','"+st.getReservationUrl()+"','"+st.getTel()+"',";
-        this._sql += "'"+st.getAddress()+"','"+st.getHoliday()+"','"+st.getAccess()+"','"+st.getBusiness()+"','"+st.getPhoto()+"'";
+        this._sql += "'"+st.getAddress()+"','"+st.getHoliday()+"','"+st.getAccess()+"','"+st.getBusiness()+"','"+st.getPhoto()+"', "+st.getSmallNum()+", "+st.getMiddleNum()+", "+st.getLargeNum()+"";
         this._sql +=") ";
         
 		try {
@@ -90,10 +91,20 @@ public class DataAccess extends Dao {
 			throw e;
 		}
 	}
-	
+
 	//データベースに挿入
 	public void Delete(String st)throws SQLException{
         this._sql = "DELETE FROM `stores` WHERE name = '"+st+"'";
+        
+		try {
+			this.st.execute(this._sql);
+		}catch(SQLException e){
+			throw e;
+		}
+	}
+	//データベースに挿入
+	public void DeleteReservation(String st)throws SQLException{
+        this._sql = "UPDATE reservations SET isdelete = 1 WHERE mail = '"+st+"'";
         
 		try {
 			this.st.execute(this._sql);
@@ -110,10 +121,10 @@ public class DataAccess extends Dao {
             		"FROM reservations re\n" + 
             		"INNER JOIN stores st ON st.id = re.st_id\n" + 
             		"WHERE st.name = '"+name+"'\n" +
+            		"AND re.isdelete = 0 \n" +
             		"AND re.day = "+date+"\n" +
             		"AND re.arrivaltime > "+nowtime+"\n"
             				+ " ORDER BY re.arrivaltime asc";
-            System.out.println(this._sql);
             rs = st.executeQuery(this._sql);
             Reservations r = null;
             while (rs.next()) {
@@ -147,6 +158,7 @@ public class DataAccess extends Dao {
             		"FROM reservations re\n" + 
             		"INNER JOIN stores st ON st.id = re.st_id\n" + 
             		"WHERE st.name = '"+name+"'\n" +
+            		"AND re.isdelete = 0 \n" +
             		"AND re.day = "+date+"\n"
             				+ " ORDER BY re.arrivaltime asc";
             rs = st.executeQuery(this._sql);
@@ -192,5 +204,74 @@ public class DataAccess extends Dao {
             throw e;
         }
     }
-    
+
+	public String RoomnumSelect(String stid,String peonum) throws Exception, SQLException {
+        String result = "";
+        int i_id = Integer.parseInt(stid);
+
+        if(Integer.parseInt(peonum) <= 4) {
+        		this._sql = "SELECT small_num,id ";
+                try {
+                    this._sql += " FROM stores WHERE id = "+i_id+" ";
+                    rs = st.executeQuery(this._sql);
+                    while (rs.next()) {
+                    		result = rs.getString("small_num");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw e;
+                }
+        }else if(Integer.parseInt(peonum) <= 8) {
+        		this._sql = "SELECT middle_num,id ";
+                try {
+                    this._sql += " FROM stores WHERE id = "+i_id+" ";
+                    System.out.println(this._sql);
+                    rs = st.executeQuery(this._sql);
+                    while (rs.next()) {
+                    		result = rs.getString("middle_num");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw e;
+                }
+        }else {
+        		this._sql = "SELECT large_num,id ";
+                try {
+                    this._sql += " FROM stores WHERE id = "+i_id+" ";
+                    rs = st.executeQuery(this._sql);
+                    while (rs.next()) {
+                    		result = rs.getString("large_num");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw e;
+                }
+        }
+        return result;
+    }
+	public Time ReservationTimeSelect(String stid, String peonum, String date, int week) throws Exception, SQLException {
+        Time t = new Time();
+        this._sql = "SELECT st_id, arrivaltime, usetime, numberpeople, day FROM reservations \n" + 
+        		"WHERE st_id = "+stid+" \n" + 
+        		"AND day = "+date+" \n" ;
+        if(Integer.parseInt(peonum) <= 4) {
+        		this._sql += "AND numberpeople <= 4 ";
+        }else if(Integer.parseInt(peonum) <= 8) {
+        		this._sql += "AND numberpeople <= 8 AND numberpeople >= 5";
+        }else {
+        		this._sql += "AND numberpeople >= 9 ";
+        }
+        
+        t.setTime(date, week);
+        try {
+            rs = st.executeQuery(this._sql);
+            while (rs.next()) {
+        		t.setTime(rs.getString("arrivaltime"),rs.getString("usetime"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return t;
+    }
 }

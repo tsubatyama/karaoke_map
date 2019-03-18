@@ -104,45 +104,54 @@ public class UploadServlet extends HttpServlet {
 	        			res.setName(val);
 	        			break;
 	        		case 1:
-	        			res.setTel(val);
-	        			break;
-	        		case 2:
-	        			res.setRoomNum(Integer.parseInt(val));
-	        			break;
-	        		case 3:
 	        			res.setIcon(val);
 	        			break;
+	        		case 2:
+	        			res.setTel(val);
+	        			break;
+	        		case 3:
+	        			res.setRoomNum(Integer.parseInt(val));
+	        			break;
 	        		case 4:
-	        			res.setIsAte(Integer.parseInt(val));
+	        			res.setSmallNum(Integer.parseInt(val));
 	        			break;
 	        		case 5:
-	        			res.setAddress(val);
+	        			res.setMiddleNum(Integer.parseInt(val));
 	        			break;
 	        		case 6:
-	        			res.setLatitude(Double.parseDouble(val));
+	        			res.setLargeNum(Integer.parseInt(val));
 	        			break;
 	        		case 7:
-	        			res.setLongitude(Double.parseDouble(val));
+	        			res.setIsAte(Integer.parseInt(val));
 	        			break;
 	        		case 8:
-	        			res.setAccess(val);
+	        			res.setAddress(val);
 	        			break;
 	        		case 9:
-	        			res.setBusiness(val);
+	        			res.setLatitude(Double.parseDouble(val));
 	        			break;
 	        		case 10:
-	        			res.setHoliday(val);
+	        			res.setLongitude(Double.parseDouble(val));
 	        			break;
 	        		case 11:
-	        			res.setReservationUrl(val);
+	        			res.setAccess(val);
 	        			break;
 	        		case 12:
-	        			res.setIsImmediately(Integer.parseInt(val));
+	        			res.setBusiness(val);
 	        			break;
 	        		case 13:
-	        			res.setMoneyUrl(val);
+	        			res.setHoliday(val);
 	        			break;
 	        		case 14:
+	        			res.setReservationUrl(val);
+	        			break;
+	        		case 15:
+	        			res.setIsImmediately(Integer.parseInt(val));
+	        			break;
+	        		case 16:
+	        			res.setMoneyUrl(val);
+	        			break;
+	        		case 17:
 	        			res.setIsHalf(val);
 	        			break;
 	        		}

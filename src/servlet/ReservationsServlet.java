@@ -72,10 +72,10 @@ public class ReservationsServlet extends HttpServlet {
 		for(Reservations rec : result){
 			String str_n = rec.getSei() + "&nbsp;" + rec.getMei();
 			if(cnt == 0) {
-				reservation += 	"{\"arrivaltime\":\""+ rec.getArrivaltime() +"\",\"usetime\":\""+rec.getUsetime()+"\",\"numberpeople\":\""+rec.getNumberpeople()+"\",\"name\":\""+str_n+"\",\"tel\":\""+rec.getTel()+"\",\"mail\":\""+rec.getMail()+"\",\"remarks\":\""+rec.getRemarks()+"\"}";
+				reservation += 	"{\"id\":\""+ rec.getId() +"\",\"arrivaltime\":\""+ rec.getArrivaltime() +"\",\"usetime\":\""+rec.getUsetime()+"\",\"numberpeople\":\""+rec.getNumberpeople()+"\",\"name\":\""+str_n+"\",\"tel\":\""+rec.getTel()+"\",\"mail\":\""+rec.getMail()+"\",\"remarks\":\""+rec.getRemarks()+"\"}";
 				cnt += 1;
 			}else {
-				reservation += 	",{\"arrivaltime\":\""+ rec.getArrivaltime() +"\",\"usetime\":\""+rec.getUsetime()+"\",\"numberpeople\":\""+rec.getNumberpeople()+"\",\"name\":\""+str_n+"\",\"tel\":\""+rec.getTel()+"\",\"mail\":\""+rec.getMail()+"\",\"remarks\":\""+rec.getRemarks()+"\"}";
+				reservation += 	",{\"id\":\""+ rec.getId() +"\",\"arrivaltime\":\""+ rec.getArrivaltime() +"\",\"usetime\":\""+rec.getUsetime()+"\",\"numberpeople\":\""+rec.getNumberpeople()+"\",\"name\":\""+str_n+"\",\"tel\":\""+rec.getTel()+"\",\"mail\":\""+rec.getMail()+"\",\"remarks\":\""+rec.getRemarks()+"\"}";
 			}
 		}
 		

@@ -1,29 +1,28 @@
 package servlet;
 
-
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import entities.Reservations;
 import tools.DataAccess;
 
 /**
- * Servlet implementation class ReInsertServlet
+ * Servlet implementation class DeleteReservation
  */
-@WebServlet("/ReInsertServlet")
-public class ReInsertServlet extends HttpServlet {
+@WebServlet("/DeleteReservation")
+public class DeleteReservation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReInsertServlet() {
+    public DeleteReservation() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,45 +32,23 @@ public class ReInsertServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-        request.setCharacterEncoding("utf-8");
 
-        Reservations res = new Reservations();
-        
-        String s_na = request.getParameter("s_na");
-        String[] sei_mei = s_na.split(" ");
-        res.setSei(sei_mei[0]);
-        res.setMei(sei_mei[1]);
-        
-        res.setStId(Integer.parseInt(request.getParameter("s_id")));
-        res.setDay(request.getParameter("s_day"));
+		request.setCharacterEncoding("UTF-8");
+	    response.setCharacterEncoding("UTF-8");
 
-        
-        String s_arri = request.getParameter("s_arri");
-        int a_num = Integer.parseInt(s_arri);
-        res.setArrivalTime(String.valueOf(a_num));
-
-        
-        String s_use = request.getParameter("s_use");
-        int b = Integer.parseInt(s_use);
-        res.setUseTime(String.valueOf(b));
-        
-        String numpe = request.getParameter("s_peo");
-        res.setNumberpeople(Integer.parseInt(numpe));
-        
-        res.setTel(request.getParameter("s_tel"));
-        res.setMail(request.getParameter("s_mai"));
-        res.setRemarks(request.getParameter("s_rem"));
-        
+	    String mail = request.getParameter("mail");
 	    DataAccess dao = null;
-
         try {
             dao = new DataAccess();
-            dao.ResevationInsert(res);
+            dao.DeleteReservation(mail);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+		RequestDispatcher rd = request.getRequestDispatcher("ResevationsList.jsp");
+		rd.forward(request,response);
 	}
 
 	/**

@@ -1,24 +1,27 @@
 package entities;
-
+/**
+ * @author tsubasakotani
+ *	予約情報登録のためのエンティティ
+ */
 public class Reservations {
 	/**
      * フィールド
      */
-	private int _id;
-	private String _name;
-	private int _st_id;
-	private String _day;
-	private String _arrivaltime;
-	private String _usetime;
-	private int _numberpeople;
-	private String _sei;
-	private String _mei;
-	private String _tel;
-	private String _mail;
-	private String _remarks;
-	private int _isdelete;
+	private int _id;//主キー
+	private String _name;//店名
+	private int _st_id;//店舗キー
+	private String _day;//日付
+	private String _arrivaltime;//利用開始時間
+	private String _usetime;//利用時間
+	private int _numberpeople;//利用人数
+	private String _sei;//苗
+	private String _mei;//名
+	private String _tel;//電話番号
+	private String _mail;//メールアドレス
+	private String _remarks;//備考
+	private int _isdelete;//削除フラグ
 	
-	public Reservations(){
+	public Reservations(){//コンストラクタ
 		this._id = 0;
 		this._name = "";
 		this._st_id = 0;
@@ -33,6 +36,10 @@ public class Reservations {
 		this._remarks = "";
 		this._isdelete = 0;
 	}
+	/**
+	 * 各項目のセッター
+	 * @param num
+	 */
     public void setId(int num) {
         this._id = num;
     }
@@ -72,6 +79,10 @@ public class Reservations {
     public void setIsdelete(int num) {
         this._isdelete = num;
     }
+    
+    /*
+     * 各項目のゲッター
+     */
     public int getId() {
         return this._id;
     }
@@ -88,12 +99,10 @@ public class Reservations {
     		String arrivaltime = "";
     		String time = this._arrivaltime;
     		int len = time.length();
-    		if(len == 3) {
+    		if(len == 3) {//利用開始時間が3桁の時の処理
     			arrivaltime = time.substring(0, 1) + "：" + time.substring(1,3);
-    		}else {
+    		}else {//利用開始時間が4桁の時の処理
     			arrivaltime = time.substring(0, 2) + "：" + time.substring(2,4);
-//    			aa += "：";
-//    			aa += time.substring(2,4);
     		}
         return arrivaltime;
     }
@@ -104,14 +113,14 @@ public class Reservations {
 		String usetime = "";
 		String time = this._usetime;
 		int len = time.length();
-		if(len == 3) {
+		if(len == 3) {//利用時間が3桁の時の処理
 			String judge = time.substring(1,3);
-			if(judge.equals("00")) {
+			if(judge.equals("00")) {//00分の時
 				usetime = time.substring(0, 1) + "時間";
 			}else {
 				usetime = time.substring(0, 1) + "時間" + time.substring(1,3) + "分";
 			}
-		}else if(len == 2) {
+		}else if(len == 2) {//０時間の時
 			usetime = time + "分";
 		}else {
 			String judge = time.substring(2,4);
@@ -120,8 +129,6 @@ public class Reservations {
 			}else {
 				usetime = time.substring(0, 2) + "時間" + time.substring(2,4) + "分";
 			}
-//			aa += "：";
-//			aa += time.substring(2,4);
 		}
         return usetime;
     }

@@ -26,7 +26,7 @@
 //ajax
 window.onload = function() {
 	var optionLoop, day, month, year, today, hour,minute;
-	var storeName = "ビックエコー 新宿西口店";
+	var storeName = "HAL大阪";
 	today = new Date();
 	var flg = 0;
 	year = today.getFullYear();
@@ -51,12 +51,21 @@ window.onload = function() {
 	done(
 		function(data){//成功時連想配列が入る
 			data=JSON.parse(data);
-			console.log(data.storename);
 			$("#store").text(data.storename)
 			var len = data['contents'].length;//title配列内の要素数を習得してlenに格納
 			for(var i = 0 ; i < len ; i++){
-				$(".con").append("<tr><td>"+data['contents'][i]['arrivaltime']+"</td><td>"+data['contents'][i]['usetime']+"</td><td>"+data['contents'][i]['numberpeople']+"</td><td>"+data['contents'][i]['name']+"</td><td>"+data['contents'][i]['tel']+"</td><td>"+data['contents'][i]['mail']+"</td><td>"+data['contents'][i]['remarks']+"</td></tr>");
+				$(".con").append("<tr><td id = arrivaltime>"+data['contents'][i]['arrivaltime']+"</td><td>"+data['contents'][i]['usetime']+"</td><td>"+data['contents'][i]['numberpeople']+"</td><td id = name>"+data['contents'][i]['name']+"</td><td>"+data['contents'][i]['tel']+"</td><td id=\"mail\">"+data['contents'][i]['mail']+"</td><td>"+data['contents'][i]['remarks']+"</td> <td id=\"id\"><a href=\"#\" id=\"delete\";return false;>キャンセル</a></td> </tr>");
 			}
+		     $('#delete').on("click",function(){
+		    	 	console.log($('#mail').text());
+		    	 	if( confirm($('#arrivaltime').text() + "からの" + $('#name').text() + " 様の予約を削除してよろしいですか？") ) {
+		    	        window.location.href = "./DeleteReservation?mail="+$('#mail').text()+"";
+		    	        
+		    	    }
+		    	    else {
+		    	        alert("キャンセルしませんでした。");
+		    	    }
+		     })
 		}
 	).
 	fail(
@@ -122,8 +131,32 @@ window.onload = function() {
 				var len = data['contents'].length;//title配列内の要素数を習得してlenに格納
 				$(".con").empty();
 				for(var i = 0 ; i < len ; i++){
-					$(".con").append("<tr><td>"+data['contents'][i]['arrivaltime']+"</td><td>"+data['contents'][i]['usetime']+"</td><td>"+data['contents'][i]['numberpeople']+"</td><td>"+data['contents'][i]['name']+"</td><td>"+data['contents'][i]['tel']+"</td><td>"+data['contents'][i]['mail']+"</td><td>"+data['contents'][i]['remarks']+"</td></tr>");
+					$(".con").append("<tr id = \"aiueo\"><td id = arrivaltime>"+data['contents'][i]['arrivaltime']+"</td><td>"+data['contents'][i]['usetime']+"</td><td>"+data['contents'][i]['numberpeople']+"</td><td id = name>"+data['contents'][i]['name']+"</td><td>"+data['contents'][i]['tel']+"</td><td id=\"mail\">"+data['contents'][i]['mail']+"</td><td>"+data['contents'][i]['remarks']+"</td> <td id=\"id\"><a href=\"#\" id=\"delete1\";return false;>キャンセル</a></td> </tr>");
 				}
+			     $('#delete1').on("click",function(){
+			    	 	if( confirm($('#arrivaltime').text() + "からの" + $('#name').text() + " 様の予約を削除してよろしいですか？") ) {
+							var reqdel = {
+								mail : $('#mail').text()
+							  };
+							$.ajax({
+								type : 'post',
+								url : 'DeleteReservation',//servltファイル
+								data : reqdel,
+								datatype:'json'
+							}).
+							done(
+							).
+							fail(
+								function(xhr){//失敗時のエラー処理
+									console.log(xhr.status);
+							});
+							 $('#aiueo').remove();
+							
+			    	    }
+			    	    else {
+			    	        alert("キャンセルしませんでした。");
+			    	    }
+			     })
 			}
 		).
 		fail(
@@ -135,14 +168,14 @@ window.onload = function() {
 	$("#store").click(function(){
 		var namejudge = $("#store").text();
 		console.log(namejudge);
-		if("ビックエコー 新宿西口店" == namejudge){
-			storeName = "HAL東京";
+		if("ビックエコー 西梅田店" == namejudge){
+			storeName = "HAL大阪";
 		} else{
-			storeName = "ビックエコー 新宿西口店";
+			storeName = "ビックエコー 西梅田店";
 		}
 		var request = {
 				id : storeName,
-				flg : 0,
+				flg : flg,
 				date : send,
 				time : setime
 			  };
@@ -159,8 +192,17 @@ window.onload = function() {
 				var len = data['contents'].length;//title配列内の要素数を習得してlenに格納
 				$(".con").empty();
 				for(var i = 0 ; i < len ; i++){
-					$(".con").append("<tr><td>"+data['contents'][i]['arrivaltime']+"</td><td>"+data['contents'][i]['usetime']+"</td><td>"+data['contents'][i]['numberpeople']+"</td><td>"+data['contents'][i]['name']+"</td><td>"+data['contents'][i]['tel']+"</td><td>"+data['contents'][i]['mail']+"</td><td>"+data['contents'][i]['remarks']+"</td></tr>");
+					$(".con").append("<tr><td id = arrivaltime>"+data['contents'][i]['arrivaltime']+"</td><td>"+data['contents'][i]['usetime']+"</td><td>"+data['contents'][i]['numberpeople']+"</td><td id = name>"+data['contents'][i]['name']+"</td><td>"+data['contents'][i]['tel']+"</td><td id=\"mail\">"+data['contents'][i]['mail']+"</td><td>"+data['contents'][i]['remarks']+"</td> <td id=\"id\"><a href=\"#\" id=\"delete2\";return false;>キャンセル</a></td> </tr>");
 				}
+			     $('#delete2').on("click",function(){
+			    	 	console.log($('#mail').text());
+			    	 	if( confirm($('#arrivaltime').text() + "からの" + $('#name').text() + " 様の予約を削除してよろしいですか？") ) {
+			    	        window.location.href = "./DeleteReservation?mail="+$('#mail').text()+"";
+			    	    }
+			    	    else {
+			    	        alert("キャンセルしませんでした。");
+			    	    }
+			     })
 			}
 		).
 		fail(
@@ -168,6 +210,8 @@ window.onload = function() {
 				console.log(xhr.status);
 		});
 	})
+	
+	
 }
 </script>
 
@@ -202,7 +246,7 @@ body{
 }
 #center{
 	background-color:white;
-	width:1000px;
+	width:1100px;
      margin-left:auto;    /* 左側マージンを自動的に空ける */
      margin-right:auto;   /* 右側マージンを自動的に空ける */
      padding:10px;
@@ -230,19 +274,23 @@ body{
 		<table style="font-size: 12px;"class="table table-striped table-bordered">
 			<thead>
 				<tr>
-					<th style="width: 10%">来店時刻</th>
-					<th style="width: 10%">利用時間</th>
-					<th style="width: 10%">利用人数</th>
-					<th style="width: 10%">代表者名</th>
-					<th style="width: 15%">電話番号</th>
-					<th style="width: 20%">メール</th>
-					<th style="width: 25%">備考</th>
+					<th style="width: 8%">来店時刻</th>
+					<th style="width: 9%">利用時間</th>
+					<th style="width: 8%">利用人数</th>
+					<th style="width: 9%">代表者名</th>
+					<th style="width: 13%">電話番号</th>
+					<th style="width: 18%">メール</th>
+					<th style="width: 26%">備考</th>
+					<th style="width: 9%">キャンセル</th>
 				</tr>
 			</thead>
+			
 			<tbody class="con">
 			</tbody>
 		</table>
+		
 	</div>
 	</div>
 </body>
+
 </html>

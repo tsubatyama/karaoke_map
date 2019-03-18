@@ -1,4 +1,8 @@
 package entities;
+/**
+ * @author tsubasakotani
+ *	店舗情報登録のためのエンティティ
+ */
 
 public class Stores {
 	/**
@@ -10,6 +14,9 @@ public class Stores {
     private Double _longitude;//経度
     private String _icon;//アイコン
     private int _room_num;//部屋数
+    private int _small_num;
+    private int _middle_num;
+    private int _large_num;
     private int _is_immediately;//即時利用フラグ
     private int _is_ate;//飲食物持ち込みフラグ
     private String _is_half;//半額フラグ
@@ -30,6 +37,9 @@ public class Stores {
         this._longitude = 0.0;
         this._icon = "";
         this._room_num = 0;
+        this._small_num = 0;
+        this._middle_num = 0;
+        this._large_num = 0;
         this._is_immediately = 0;
         this._is_ate = 0;
         this._is_half = "";
@@ -90,13 +100,34 @@ public class Stores {
     public void setPhoto(String photo) {
         this._photo = photo;
     }
-    
+
     /**
      * 部屋数のセッター
      * @param room_num
      */
     public void setRoomNum(int room_num) {
         this._room_num = room_num;
+    }
+    /**
+     * Sの部屋数のセッター
+     * @param small_num
+     */
+    public void setSmallNum(int small_num) {
+        this._small_num = small_num;
+    }
+    /**
+     * Mの部屋数のセッター
+     * @param middle_num
+     */
+    public void setMiddleNum(int middle_num) {
+        this._middle_num = middle_num;
+    }
+    /**
+     * Lの部屋数のセッター
+     * @param large_num
+     */
+    public void setLargeNum(int large_num) {
+        this._large_num = large_num;
     }
     
     /**
@@ -220,13 +251,34 @@ public class Stores {
     public String getPhoto() {
         return this._photo;
     }
-    
+
     /**
      * 部屋数のゲッター
      * @return room_numのゲッター
      */
     public int getRoomNum() {
         return this._room_num;
+    }
+    /**
+     * Sの部屋数のゲッター
+     * @return small_numのゲッター
+     */
+    public int getSmallNum() {
+        return this._small_num;
+    }
+    /**
+     * Mの部屋数のゲッター
+     * @return middle_numのゲッター
+     */
+    public int getMiddleNum() {
+        return this._middle_num;
+    }
+    /**
+     * Lの部屋数のゲッター
+     * @return large_numのゲッター
+     */
+    public int getLargeNum() {
+        return this._large_num;
     }
 
     /**
